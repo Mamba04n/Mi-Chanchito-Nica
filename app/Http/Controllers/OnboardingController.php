@@ -35,8 +35,9 @@ class OnboardingController extends Controller
             'timezone' => 'America/Managua',
         ]);
 
+        $ownerRole = \App\Models\Role::where('key', 'owner')->first();
         Auth::user()->companies()->attach($company->id, [
-            'role_id' => 'admin',
+            'role_id' => $ownerRole->id,
             'status' => 'active',
         ]);
 

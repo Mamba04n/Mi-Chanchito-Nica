@@ -50,3 +50,21 @@ Este archivo evita que el equipo cambie decisiones importantes sin dejar rastro.
 - Decisión: progreso educativo pertenece al usuario; recomendaciones pueden enlazar opcionalmente una empresa/indicador.
 - Consecuencias: progreso portable; requiere cuidado al mostrar contexto financiero.
 - Requerimientos afectados: educación, gamificación, IA.
+
+### ADR-005 — Catálogo de Productos y Servicios Unificado
+- Fecha: 2026-09-03
+- Estado: Aceptada
+- Contexto: Tanto productos como servicios pueden facturarse.
+- Decisión: Combinar ambos en la tabla products con una columna 	ype (product/service) y 	rack_inventory.
+- Alternativas consideradas: Tablas separadas products y services.
+- Consecuencias: Facilita la facturación híbrida sin duplicar esquemas. Un servicio no afectará existencias en almacenes.
+- Requerimientos afectados: Catálogo, Facturación, Inventario.
+
+### ADR-006 — Desactivación Lógica vs SoftDeletes
+- Fecha: 2026-09-03
+- Estado: Aceptada
+- Contexto: Manejo de eliminaciones en datos financieros e históricos (Clientes, Proveedores, etc.).
+- Decisión: Usar un campo booleano ctive en lugar del rasgo SoftDeletes de Laravel para desactivar entidades.
+- Alternativas consideradas: Illuminate\Database\Eloquent\SoftDeletes (deleted_at).
+- Consecuencias: Consultas más simples y explícitas (where('active', true)). Evita conflictos ocultos de Laravel en relaciones complejas y mantiene mejor la trazabilidad Odoo-style.
+- Requerimientos afectados: Historial, Integridad, Base de Datos.

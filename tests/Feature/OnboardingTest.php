@@ -24,12 +24,12 @@ class OnboardingTest extends TestCase
     {
         $user = User::factory()->create();
         
-        // Ensure modules are seeded
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
         $this->seed(\Database\Seeders\ModuleSeeder::class);
 
         $response = $this->actingAs($user)->post(route('onboarding.store'), [
             'name' => 'Mi Nueva Empresa',
-            'modules' => ['sales', 'inventory'],
+            'modules' => ['customers', 'billing'],
         ]);
 
         $response->assertRedirect(route('dashboard'));
@@ -41,7 +41,7 @@ class OnboardingTest extends TestCase
         // Assert modules are active
         $this->assertDatabaseHas('company_modules', [
             'company_id' => $company->id,
-            'module_id' => \App\Models\Module::where('key', 'sales')->first()->id,
+            'module_id' => \App\Models\Module::where('key', 'customers')->first()->id,
             'disabled_at' => null,
         ]);
     }

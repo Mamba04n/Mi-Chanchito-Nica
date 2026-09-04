@@ -38,9 +38,24 @@ class RolePermissionSeeder extends Seeder
 
         // Create base permissions
         $permissions = [
+            ['key' => 'customers.view', 'name' => 'Ver clientes', 'module_key' => 'customers'],
+            ['key' => 'customers.create', 'name' => 'Crear clientes', 'module_key' => 'customers'],
+            ['key' => 'customers.update', 'name' => 'Editar clientes', 'module_key' => 'customers'],
+            ['key' => 'customers.delete', 'name' => 'Desactivar clientes', 'module_key' => 'customers'],
+
+            ['key' => 'suppliers.view', 'name' => 'Ver proveedores', 'module_key' => 'suppliers'],
+            ['key' => 'suppliers.create', 'name' => 'Crear proveedores', 'module_key' => 'suppliers'],
+            ['key' => 'suppliers.update', 'name' => 'Editar proveedores', 'module_key' => 'suppliers'],
+            ['key' => 'suppliers.delete', 'name' => 'Desactivar proveedores', 'module_key' => 'suppliers'],
+
+            ['key' => 'catalog.view', 'name' => 'Ver catálogo', 'module_key' => 'catalog'],
+            ['key' => 'catalog.create', 'name' => 'Crear en catálogo', 'module_key' => 'catalog'],
+            ['key' => 'catalog.update', 'name' => 'Editar en catálogo', 'module_key' => 'catalog'],
+            ['key' => 'catalog.delete', 'name' => 'Desactivar en catálogo', 'module_key' => 'catalog'],
+
             ['key' => 'inventory.view', 'name' => 'Ver inventario', 'module_key' => 'inventory'],
-            ['key' => 'inventory.create', 'name' => 'Crear productos', 'module_key' => 'inventory'],
-            ['key' => 'inventory.update', 'name' => 'Editar productos', 'module_key' => 'inventory'],
+            ['key' => 'inventory.create', 'name' => 'Crear productos (inv)', 'module_key' => 'inventory'],
+            ['key' => 'inventory.update', 'name' => 'Editar productos (inv)', 'module_key' => 'inventory'],
             ['key' => 'inventory.adjust', 'name' => 'Ajustar existencias', 'module_key' => 'inventory'],
 
             ['key' => 'billing.view', 'name' => 'Ver facturación', 'module_key' => 'billing'],
@@ -61,17 +76,24 @@ class RolePermissionSeeder extends Seeder
         $admin->permissions()->sync($allPermissions);
 
         $managerPermissions = Permission::whereIn('key', [
+            'customers.view', 'customers.create', 'customers.update',
+            'suppliers.view', 'suppliers.create', 'suppliers.update',
+            'catalog.view', 'catalog.create', 'catalog.update',
             'inventory.view', 'inventory.create', 'inventory.update',
             'billing.view', 'billing.create', 'billing.confirm'
         ])->get();
         $manager->permissions()->sync($managerPermissions);
 
         $operatorPermissions = Permission::whereIn('key', [
+            'customers.view', 'customers.create',
+            'suppliers.view',
+            'catalog.view',
             'inventory.view', 'billing.view', 'billing.create'
         ])->get();
         $operator->permissions()->sync($operatorPermissions);
 
         $viewerPermissions = Permission::whereIn('key', [
+            'customers.view', 'suppliers.view', 'catalog.view',
             'inventory.view', 'billing.view'
         ])->get();
         $viewer->permissions()->sync($viewerPermissions);
