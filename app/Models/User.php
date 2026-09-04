@@ -51,8 +51,26 @@ class User extends Authenticatable
 
     public function companies()
     {
-        return $this->belongsToMany(Company::class)
+        return $this->belongsToMany(Company::class, 'company_user')
             ->withPivot('role_id', 'status', 'joined_at')
             ->withTimestamps();
+    }
+
+    public function getRoleInCompany(Company $company): ?Role
+    {
+        $pivot = $this->companies()->where('companies.id', $company->id)->first()?->pivot;
+        if (!$pivot || !$pivot->role_id) return null;
+        
+        return Role::find($pivot->role_id);
+    }
+
+    public function hasPermission(string $permissionKey, Company $company): bool
+    {
+        $role = $this->getRoleInCompany($company);
+        if (!$role) return false;
+
+        if ($role->key === 'owner') return true; // Owner has all permissions
+
+        return $role->permissions()->where('key', $permissionKey)->exists();
     }
 }

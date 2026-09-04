@@ -13,13 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            RolePermissionSeeder::class,
             ModuleSeeder::class,
         ]);
 
         $user = User::factory()->create([
-            'name' => 'Admin Demo',
+            'name' => 'Test Admin',
             'email' => 'admin@chanchitonica.com',
-            'password' => Hash::make('password'),
+            'password' => bcrypt('password'),
         ]);
 
         $company = Company::create([
@@ -27,17 +28,21 @@ class DatabaseSeeder extends Seeder
             'country_code' => 'NI',
             'currency_code' => 'NIO',
             'timezone' => 'America/Managua',
+            'active' => true,
         ]);
 
-        $user->companies()->attach($company->id, [
-            'role_id' => 'admin',
+        $ownerRole = \App\Models\Role::where('key', 'owner')->first();
+
+        $company->users()->attach($user, [
+            'role_id' => $ownerRole->id,
             'status' => 'active',
         ]);
 
-        $moduleManager = app(ModuleManager::class);
-        $moduleManager->activateModule($company, 'sales');
-        $moduleManager->activateModule($company, 'inventory');
-        $moduleManager->activateModule($company, 'receivables');
-        $moduleManager->activateModule($company, 'cash');
+        $moduleManager = app(\App\Services\ModuleManager::class);
+        $moduleManager->activateModule($company, 'customers');
+        $moduleManager->activateModule($company, 'suppliers');
+        $moduleManager->activateModule($company, 'catalog');
+        $moduleManager->activateModule($company, 'billing');
+        $moduleManager->activateModule($company, 'treasury');
     }
 }
