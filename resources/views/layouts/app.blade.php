@@ -14,23 +14,33 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-[#FAF9F6] text-brand-navy-900">
-        <div class="min-h-screen">
-            <livewire:layout.navigation />
+    <body class="font-sans antialiased bg-[#F8F9FA] text-brand-navy-900 overflow-hidden">
+        <div class="flex h-screen w-full">
+            <!-- Sidebar (Left) -->
+            <livewire:layout.sidebar />
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white border-b border-gray-100 shadow-sm">
-                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+            <!-- Main Content (Right) -->
+            <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+                
+                <!-- Top Navigation Bar -->
+                <livewire:layout.navigation />
 
-            <!-- Page Content -->
-            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {{ $slot }}
-            </main>
+                <!-- Page Content Area -->
+                <div class="flex-1 overflow-y-auto">
+                    <!-- Optional Module Header -->
+                    @if (isset($header))
+                        <header class="bg-white border-b border-gray-200">
+                            <div class="max-w-7xl mx-auto py-4 px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </header>
+                    @endif
+
+                    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {{ $slot }}
+                    </main>
+                </div>
+            </div>
         </div>
     </body>
 </html>
