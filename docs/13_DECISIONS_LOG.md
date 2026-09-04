@@ -68,3 +68,31 @@ Este archivo evita que el equipo cambie decisiones importantes sin dejar rastro.
 - Alternativas consideradas: Illuminate\Database\Eloquent\SoftDeletes (deleted_at).
 - Consecuencias: Consultas más simples y explícitas (where('active', true)). Evita conflictos ocultos de Laravel en relaciones complejas y mantiene mejor la trazabilidad Odoo-style.
 - Requerimientos afectados: Historial, Integridad, Base de Datos.
+
+### ADR-007 — Movimientos como única fuente de verdad para el stock
+- Fecha: 2026-09-03
+- Estado: Aceptada
+- Contexto: Riesgo de inconsistencias si el stock se altera manualmente.
+- Decisión: La cantidad de stock (\quantity\) en \InventoryStock\ NO se edita de manera arbitraria; todo ajuste de inventario se centraliza mediante los \InventoryMovement\.
+- Alternativas consideradas: Actualización en vivo sin historial (descartado por falta de trazabilidad).
+- Consecuencias: Inventario trazable y seguro. El Kardex se genera leyendo el log de movimientos.
+- Requerimientos afectados: Inventario, Kardex, Auditoría.
+
+### ADR-008 — Prevención de stock negativo
+- Fecha: 2026-09-03
+- Estado: Aceptada
+- Contexto: Control inicial simple y estricto del almacén.
+- Decisión: El Backend validará e impedirá registrar salidas (\egisterExit\, transferencias o ajustes) si la cantidad excede el stock actual.
+- Alternativas consideradas: Permitir stock en negativo y ajustarlo luego al cerrar compras (descartado para simplicidad MVP).
+- Consecuencias: Obliga a realizar la entrada (compras/ajustes in) antes de la salida (ventas/ajustes out).
+- Requerimientos afectados: Inventario, Facturación.
+
+### ADR-009 — Concurrencia de Inventario con Bloqueo de Base de Datos
+- Fecha: 2026-09-03
+- Estado: Aceptada
+- Contexto: Evitar inconsistencias cuando dos operaciones consumen el mismo stock simultáneamente.
+- Decisión: Implementar \DB::transaction()\ junto a \lockForUpdate()\ en los registros de inventario.
+- Alternativas consideradas: Bloqueos a nivel de aplicación (Redis) - descartado por ser infraestructura externa innecesaria.
+- Consecuencias: Previene colisiones a nivel de base de datos de manera robusta y estandarizada en MySQL.
+- Requerimientos afectados: Rendimiento, Inventario.
+

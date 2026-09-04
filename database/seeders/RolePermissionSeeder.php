@@ -54,9 +54,11 @@ class RolePermissionSeeder extends Seeder
             ['key' => 'catalog.delete', 'name' => 'Desactivar en catálogo', 'module_key' => 'catalog'],
 
             ['key' => 'inventory.view', 'name' => 'Ver inventario', 'module_key' => 'inventory'],
-            ['key' => 'inventory.create', 'name' => 'Crear productos (inv)', 'module_key' => 'inventory'],
-            ['key' => 'inventory.update', 'name' => 'Editar productos (inv)', 'module_key' => 'inventory'],
+            ['key' => 'inventory.create', 'name' => 'Registrar entradas', 'module_key' => 'inventory'],
+            ['key' => 'inventory.update', 'name' => 'Registrar salidas', 'module_key' => 'inventory'],
             ['key' => 'inventory.adjust', 'name' => 'Ajustar existencias', 'module_key' => 'inventory'],
+            ['key' => 'inventory.transfer', 'name' => 'Transferir stock', 'module_key' => 'inventory'],
+            ['key' => 'inventory.warehouses.manage', 'name' => 'Administrar almacenes', 'module_key' => 'inventory'],
 
             ['key' => 'billing.view', 'name' => 'Ver facturación', 'module_key' => 'billing'],
             ['key' => 'billing.create', 'name' => 'Crear facturas', 'module_key' => 'billing'],
@@ -79,16 +81,17 @@ class RolePermissionSeeder extends Seeder
             'customers.view', 'customers.create', 'customers.update',
             'suppliers.view', 'suppliers.create', 'suppliers.update',
             'catalog.view', 'catalog.create', 'catalog.update',
-            'inventory.view', 'inventory.create', 'inventory.update',
+            'inventory.view', 'inventory.create', 'inventory.update', 'inventory.adjust', 'inventory.transfer', 'inventory.warehouses.manage',
             'billing.view', 'billing.create', 'billing.confirm'
         ])->get();
         $manager->permissions()->sync($managerPermissions);
 
-        $operatorPermissions = Permission::whereIn('key', [
+        $operatorPermissions = \App\Models\Permission::whereIn('key', [
             'customers.view', 'customers.create',
             'suppliers.view',
             'catalog.view',
-            'inventory.view', 'billing.view', 'billing.create'
+            'inventory.view', 'inventory.create', 'inventory.update', 'inventory.transfer',
+            'billing.view', 'billing.create'
         ])->get();
         $operator->permissions()->sync($operatorPermissions);
 

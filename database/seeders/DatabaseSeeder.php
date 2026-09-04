@@ -99,5 +99,51 @@ class DatabaseSeeder extends Seeder
             'category_id' => $catServices->id, 'unit_id' => $uomHour->id, 
             'type' => 'service', 'sale_price' => 500.00, 'cost' => 0.00, 'track_inventory' => false
         ]);
+
+        $moduleManager->activateModule($company, 'inventory');
+        
+        $warehouseMain = \App\Models\Warehouse::create([
+            'company_id' => $company->id,
+            'code' => 'MAIN',
+            'name' => 'Bodega Principal',
+            'is_default' => true,
+        ]);
+        
+        $warehouseBranch = \App\Models\Warehouse::create([
+            'company_id' => $company->id,
+            'code' => 'SUC-MGA',
+            'name' => 'Sucursal Managua',
+        ]);
+        app(\App\Context\CompanyContext::class)->setCompany($company);
+        auth()->login($user);
+
+        $inventoryService = app(\App\Services\Inventory\InventoryService::class);
+        $prodCoffee = \App\Models\Product::where('sku', 'PROD-001')->first(); // Café (normal)
+        $prodSugar = \App\Models\Product::where('sku', 'PROD-002')->first(); // Azúcar (agotado)
+        $prodGlass = \App\Models\Product::where('sku', 'PROD-003')->first(); // Vaso (bajo stock)
+
+        // Set minimum stocks directly
+        \App\Models\InventoryStock::create([
+            'company_id' => $company->id,
+            'warehouse_id' => $warehouseMain->id,
+            'product_id' => $prodCoffee->id,
+            'minimum_stock' => 20,
+        ]);
+        
+        \App\Models\InventoryStock::create([
+            'company_id' => $company->id,
+            'warehouse_id' => $warehouseMain->id,
+            'product_id' => $prodGlass->id,
+            'minimum_stock' => 50,
+        ]);
+
+        // Coffee: opening stock 120, transfer 20 to branch.
+        $inventoryService->setOpeningStock($warehouseMain, $prodCoffee, 120, 'Stock inicial inventario');
+        $inventoryService->transferStock($warehouseMain, $warehouseBranch, $prodCoffee, 20, 'Abastecer sucursal');
+
+        // Glass: low stock. minimum 50, set opening to 30.
+        $inventoryService->setOpeningStock($warehouseMain, $prodGlass, 30, 'Stock inicial vasos térmicos');
+        
+        // Sugar is left at 0 (agotado). No opening stock needed.
     }
 }
