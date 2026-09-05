@@ -15,7 +15,7 @@ class EditCompany extends Component
 
     public function mount(CompanyContext $companyContext)
     {
-        $company = $companyContext->currentCompany();
+        $company = $companyContext->getCompany();
         $this->name = $company->name;
         $this->country_code = $company->country_code;
         $this->currency_code = $company->currency_code;
@@ -31,7 +31,7 @@ class EditCompany extends Component
             'timezone' => 'required|string|max:50',
         ]);
 
-        $company = $companyContext->currentCompany();
+        $company = $companyContext->getCompany();
         $company->update([
             'name' => $this->name,
             'country_code' => $this->country_code,

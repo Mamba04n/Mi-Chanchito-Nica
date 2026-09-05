@@ -21,12 +21,12 @@ class ManageUsers extends Component
 
     public function loadUsers(CompanyContext $companyContext)
     {
-        $this->users = $companyContext->currentCompany()->users()->with('companies')->get();
+        $this->users = $companyContext->getCompany()->users()->with('companies')->get();
     }
 
     public function changeRole($userId, $roleKey, CompanyContext $companyContext)
     {
-        $company = $companyContext->currentCompany();
+        $company = $companyContext->getCompany();
         $role = Role::where('key', $roleKey)->firstOrFail();
         
         $company->users()->updateExistingPivot($userId, [

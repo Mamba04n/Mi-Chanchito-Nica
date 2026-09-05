@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Inventory;
 
-use App\Models\InventoryStock;
-use App\Models\Warehouse;
+use \App\Models\InventoryStock;
+use \App\Models\Warehouse;
 use App\Services\Inventory\InventoryDashboardService;
 use App\Context\CompanyContext;
 use Livewire\Component;

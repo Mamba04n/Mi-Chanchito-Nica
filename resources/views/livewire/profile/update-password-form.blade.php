@@ -40,40 +40,46 @@ new class extends Component
 
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
+        <h2 class="text-xl font-bold font-display text-brand-navy-900 flex items-center gap-2">
+            <svg class="w-6 h-6 text-brand-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            Seguridad
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        <p class="mt-2 text-sm text-brand-soft-textSec">
+            Actualiza tu contraseña para mantener tu cuenta protegida.
         </p>
     </header>
 
-    <form wire:submit="updatePassword" class="mt-6 space-y-6">
+    <form wire:submit="updatePassword" class="mt-8 space-y-6">
         <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
+            <label for="update_password_current_password" class="block text-sm font-bold text-brand-navy-900 mb-2">Contraseña Actual</label>
+            <input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="w-full px-4 py-3 rounded-xl border border-brand-soft-border bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-green-500/20 focus:border-brand-green-500 transition-colors text-brand-navy-900" autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('current_password')" class="mt-2 text-brand-coral-500" />
         </div>
 
         <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input wire:model="password" id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <label for="update_password_password" class="block text-sm font-bold text-brand-navy-900 mb-2">Nueva Contraseña</label>
+            <input wire:model="password" id="update_password_password" name="password" type="password" class="w-full px-4 py-3 rounded-xl border border-brand-soft-border bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-green-500/20 focus:border-brand-green-500 transition-colors text-brand-navy-900" autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2 text-brand-coral-500" />
         </div>
 
         <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            <label for="update_password_password_confirmation" class="block text-sm font-bold text-brand-navy-900 mb-2">Confirmar Nueva Contraseña</label>
+            <input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="w-full px-4 py-3 rounded-xl border border-brand-soft-border bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-green-500/20 focus:border-brand-green-500 transition-colors text-brand-navy-900" autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-brand-coral-500" />
+            <p class="mt-3 text-xs text-brand-soft-textSec flex items-start gap-1.5">
+                <svg class="w-4 h-4 shrink-0 mt-0.5 text-brand-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Usa una contraseña segura y fácil de recordar para ti.
+            </p>
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            <x-action-message class="me-3" on="password-updated">
-                {{ __('Saved.') }}
+        <div class="pt-4 border-t border-brand-soft-border flex items-center justify-end gap-4">
+            <x-action-message class="me-3 text-sm font-bold text-brand-green-600" on="password-updated">
+                ¡Contraseña actualizada!
             </x-action-message>
+
+            <button type="submit" class="inline-flex items-center px-6 py-3 bg-brand-navy-900 border border-transparent rounded-xl font-bold text-sm text-white hover:bg-brand-navy-800 focus:outline-none focus:ring-4 focus:ring-brand-navy-500/30 transition-all shadow-sm">
+                Guardar Cambios
+            </button>
         </div>
     </form>
 </section>

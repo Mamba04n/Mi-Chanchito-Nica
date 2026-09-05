@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Inventory;
 
-use App\Models\Warehouse;
+use \App\Models\Warehouse;
 use App\Context\CompanyContext;
 use Livewire\Component;
 

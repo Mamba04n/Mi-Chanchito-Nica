@@ -1,0 +1,1 @@
+<div class="p-6 bg-white rounded-2xl shadow-sm text-brand-navy-900"><h1 class="text-2xl font-bold font-gliker text-brand-green-700">Customer Form</h1></div>

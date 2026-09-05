@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Livewire\Catalog;
-
 use Livewire\Component;
 
 class CategoryList extends Component
 {
     public function render()
     {
-        return view('livewire.catalog.category-list');
+        return view('livewire.catalog.category-list')->layout('layouts.app');
     }
 }

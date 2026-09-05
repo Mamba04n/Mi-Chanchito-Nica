@@ -23,56 +23,58 @@ new class extends Component
     }
 }; ?>
 
-<section class="space-y-6">
+<section class="space-y-6 relative z-10">
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Delete Account') }}
+        <h2 class="text-xl font-bold font-display text-brand-coral-500 flex items-center gap-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            Zona de Peligro
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+        <p class="mt-2 text-sm text-brand-soft-textSec max-w-xl">
+            Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán borrados permanentemente de <strong>Mi Chanchito Nica</strong>. Antes de eliminarla, asegúrate de descargar cualquier información que desees conservar.
         </p>
     </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    <div>
+        <button
+            x-data=""
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+            class="inline-flex items-center px-6 py-3 bg-white border border-brand-coral-300 rounded-xl font-bold text-sm text-brand-coral-500 hover:bg-brand-coral-50 focus:outline-none focus:ring-4 focus:ring-brand-coral-500/20 transition-all shadow-sm"
+        >
+            Eliminar cuenta
+        </button>
+    </div>
 
     <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
-        <form wire:submit="deleteUser" class="p-6">
-
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Are you sure you want to delete your account?') }}
+        <form wire:submit="deleteUser" class="p-8">
+            <h2 class="text-2xl font-display font-bold text-brand-navy-900 mb-2">
+                ¿Estás seguro de que deseas eliminar tu cuenta?
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+            <p class="text-sm text-brand-soft-textSec mb-6">
+                Esta acción es irreversible. Todos tus datos, compras y progreso serán eliminados. Por favor ingresa tu contraseña para confirmar la eliminación.
             </p>
 
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
+            <div>
+                <label for="password" class="sr-only">Contraseña</label>
+                <input
                     wire:model="password"
                     id="password"
                     name="password"
                     type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
+                    class="w-full px-4 py-3 rounded-xl border border-brand-soft-border bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-coral-500/20 focus:border-brand-coral-500 transition-colors text-brand-navy-900"
+                    placeholder="Tu contraseña actual"
                 />
-
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2 text-brand-coral-500 font-medium" />
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
+            <div class="mt-8 flex justify-end gap-3">
+                <button type="button" x-on:click="$dispatch('close')" class="inline-flex items-center px-6 py-3 bg-white border border-brand-soft-border rounded-xl font-bold text-sm text-brand-navy-900 hover:bg-gray-50 transition-all shadow-sm">
+                    Cancelar
+                </button>
 
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
+                <button type="submit" class="inline-flex items-center px-6 py-3 bg-brand-coral-500 border border-transparent rounded-xl font-bold text-sm text-white hover:bg-brand-coral-600 transition-all shadow-sm focus:ring-4 focus:ring-brand-coral-500/30">
+                    Sí, Eliminar Cuenta
+                </button>
             </div>
         </form>
     </x-modal>

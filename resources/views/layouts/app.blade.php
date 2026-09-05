@@ -19,77 +19,20 @@
         <!-- Mobile Header (Visible only on mobile) -->
         <header class="md:hidden flex items-center justify-between px-4 h-16 bg-white border-b border-brand-soft-border shrink-0 z-30 relative">
             <div class="flex items-center gap-3">
-                <x-application-logo class="h-8 w-auto" />
+                <a href="{{ route('dashboard') }}" wire:navigate>
+                    <x-application-logo class="h-8 w-auto" />
+                </a>
+                <span class="text-brand-soft-textMain font-display font-bold text-lg tracking-wide mt-1">Chanchito</span>
             </div>
             <div class="flex items-center gap-4">
-                <button class="text-brand-soft-textSec hover:text-brand-soft-textMain relative transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                    <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-brand-coral-500 ring-2 ring-white"></span>
+                <button @click="showAppLauncher = true" class="text-brand-soft-textSec hover:text-brand-soft-textMain transition-colors focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                 </button>
             </div>
         </header>
 
-        <!-- App Launcher Modal (Mobile & Desktop) -->
-        <div x-show="showAppLauncher" style="display: none;" class="fixed inset-0 z-50 overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-            <div class="absolute inset-0 overflow-hidden">
-                <div x-show="showAppLauncher" x-transition.opacity class="absolute inset-0 bg-brand-soft-textMain/30 backdrop-blur-sm transition-opacity" @click="showAppLauncher = false"></div>
-                
-                <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                    <div x-show="showAppLauncher" 
-                        x-transition:enter="transform transition ease-in-out duration-300 sm:duration-500" 
-                        x-transition:enter-start="translate-x-full" 
-                        x-transition:enter-end="translate-x-0" 
-                        x-transition:leave="transform transition ease-in-out duration-300 sm:duration-500" 
-                        x-transition:leave-start="translate-x-0" 
-                        x-transition:leave-end="translate-x-full" 
-                        class="pointer-events-auto w-screen max-w-sm">
-                        <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl rounded-l-3xl">
-                            <div class="px-6 py-6 border-b border-brand-soft-border flex justify-between items-center bg-brand-soft-bg">
-                                <h2 class="text-lg font-bold font-display text-brand-soft-textMain" id="slide-over-title">Aplicaciones</h2>
-                                <button type="button" class="rounded-full bg-white p-2 text-brand-soft-textSec hover:text-brand-soft-textMain shadow-sm border border-brand-soft-border focus:outline-none transition-colors" @click="showAppLauncher = false">
-                                    <span class="sr-only">Cerrar panel</span>
-                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                                </button>
-                            </div>
-                            <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                                <div class="grid grid-cols-3 gap-4">
-                                    <a href="{{ route('dashboard') }}" wire:navigate @click="showAppLauncher = false" class="flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-brand-soft-hoverBg transition-colors group">
-                                        <div class="w-14 h-14 bg-brand-soft-bg text-brand-soft-textSec rounded-2xl flex items-center justify-center group-hover:bg-white group-hover:text-brand-soft-textMain transition-colors shadow-sm border border-transparent group-hover:border-brand-soft-border">
-                                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                                        </div>
-                                        <span class="text-xs font-semibold text-brand-soft-textSec group-hover:text-brand-soft-textMain transition-colors text-center">Dashboard</span>
-                                    </a>
-                                    
-                                    <a href="{{ route('inventory.index') }}" wire:navigate @click="showAppLauncher = false" class="flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-brand-soft-activeBg transition-colors group">
-                                        <div class="w-14 h-14 bg-brand-soft-activeBg text-brand-soft-activeText rounded-2xl flex items-center justify-center shadow-sm border border-brand-soft-border group-hover:scale-105 transition-transform">
-                                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                                        </div>
-                                        <span class="text-xs font-bold text-brand-soft-activeText text-center">Inventario</span>
-                                    </a>
-
-                                    <!-- Placeholder locked apps -->
-                                    <div class="flex flex-col items-center gap-2 p-3 rounded-2xl opacity-50 cursor-not-allowed">
-                                        <div class="w-14 h-14 bg-brand-soft-bg text-brand-soft-textSec rounded-2xl flex items-center justify-center border border-brand-soft-border">
-                                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                                        </div>
-                                        <span class="text-xs font-semibold text-brand-soft-textSec text-center">Facturación</span>
-                                    </div>
-                                    <div class="flex flex-col items-center gap-2 p-3 rounded-2xl opacity-50 cursor-not-allowed">
-                                        <div class="w-14 h-14 bg-brand-soft-bg text-brand-soft-textSec rounded-2xl flex items-center justify-center border border-brand-soft-border">
-                                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                                        </div>
-                                        <span class="text-xs font-semibold text-gray-500 text-center">RRHH</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Desktop Sidebar (Hidden on mobile) -->
-        <div class="hidden md:block h-full">
+        <div class="hidden md:block h-full shrink-0">
             <livewire:layout.sidebar />
         </div>
 
@@ -97,7 +40,7 @@
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
             
             <!-- Desktop Topbar (Hidden on mobile) -->
-            <div class="hidden md:block">
+            <div class="hidden md:block shrink-0">
                 <livewire:layout.navigation />
             </div>
 
@@ -105,7 +48,7 @@
             <div class="flex-1 overflow-y-auto pb-20 md:pb-0 relative">
                 <!-- Optional Module Header -->
                 @if (isset($header))
-                    <header class="bg-white border-b border-gray-200 sticky top-0 z-20">
+                    <header class="bg-white border-b border-brand-soft-border sticky top-0 z-20">
                         <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
                             {{ $header }}
                         </div>
@@ -118,35 +61,57 @@
             </div>
         </div>
 
-        <!-- Mobile Floating Action Button (Inventory Operations) -->
-        @if(request()->routeIs('inventory.*'))
-        <div class="md:hidden fixed bottom-20 right-4 z-40" x-data="{ open: false }">
-            <button @click="open = !open" @click.away="open = false" class="w-14 h-14 bg-brand-green-700 text-white rounded-full flex items-center justify-center shadow-lg shadow-brand-green-700/30 hover:bg-brand-green-500 hover:scale-105 transition-all focus:outline-none">
-                <svg x-show="!open" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                <svg x-show="open" style="display: none;" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            
-            <div x-show="open" style="display: none;" 
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-4 scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 scale-95"
-                class="absolute bottom-16 right-0 mb-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 flex flex-col gap-1 z-50">
-                <a href="{{ route('inventory.adjustments') }}" wire:navigate class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-brand-green-700">
-                    <span class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></span>
-                    Ajuste Manual
-                </a>
-                <a href="{{ route('inventory.transfers') }}" wire:navigate class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-brand-green-700">
-                    <span class="w-6 h-6 rounded bg-brand-green-50 flex items-center justify-center text-brand-green-700"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg></span>
-                    Transferencia
-                </a>
-            </div>
-        </div>
-        @endif
-
         <!-- Mobile Bottom Navigation -->
         <livewire:layout.bottom-navigation />
+        
+        <!-- Global App Launcher Modal -->
+        <livewire:layout.app-launcher />
+
+        <!-- Floating AI Assistant Mascot -->
+        <div class="fixed bottom-20 md:bottom-8 right-6 md:right-8 z-40 flex flex-col items-end" x-data="{ open: false, greeting: true }" x-init="setTimeout(() => greeting = false, 5000)">
+            <style>
+                @keyframes float-ai {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-8px); }
+                }
+                .anim-float-ai { animation: float-ai 3s infinite ease-in-out; }
+            </style>
+            
+            <!-- Speech Bubble -->
+            <div x-show="greeting || open" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 scale-90"
+                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 scale-90"
+                 class="mb-4 bg-white p-4 rounded-2xl shadow-xl border border-brand-soft-border max-w-[280px] relative origin-bottom-right"
+                 style="display: none;">
+                
+                <button @click="open = false; greeting = false" class="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                
+                <div class="flex items-start gap-3 mt-1">
+                    <div class="mt-1.5 shrink-0 w-2 h-2 rounded-full bg-brand-green-500 animate-pulse"></div>
+                    <div>
+                        <p class="text-[13px] font-bold text-brand-navy-900 mb-1 font-display tracking-wide">Tu Asistente IA</p>
+                        <p class="text-[13px] text-brand-soft-textSec leading-snug">¡Hola! Soy Chanchito. Estoy aquí para ayudarte a analizar tus finanzas y configuraciones.</p>
+                    </div>
+                </div>
+
+                <!-- Small triangle pointer -->
+                <div class="absolute -bottom-2 right-7 w-4 h-4 bg-white border-b border-r border-brand-soft-border transform rotate-45"></div>
+            </div>
+
+            <!-- Mascot Button -->
+            <button @click="open = !open; greeting = false" class="relative group outline-none focus:outline-none">
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-lg border-2 border-brand-green-200 flex items-center justify-center anim-float-ai group-hover:border-brand-green-400 group-hover:shadow-xl transition-all p-1 overflow-hidden">
+                    <img src="{{ asset('images/ai-pig.png') }}" alt="Asistente de IA" class="w-full h-full object-cover rounded-full" />
+                </div>
+                <!-- Status dot -->
+                <div class="absolute bottom-1 right-1 w-4 h-4 md:w-5 md:h-5 bg-brand-green-500 border-2 border-white rounded-full shadow-sm"></div>
+            </button>
+        </div>
     </body>
 </html>
