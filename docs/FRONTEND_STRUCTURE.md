@@ -47,3 +47,25 @@ Organización de clases PHP para Livewire.
 ### `resources/css/` & `resources/js/`
 - Organizado en `base/`, `components/`, `utilities/` y `modules/`.
 - Uso principal para estilos o scripts personalizados que no puedan ser cubiertos exclusivamente por Tailwind CSS o Alpine.js en línea.
+
+## Tailwind CSS & Estilos SaaS
+
+Basado en el sistema de diseño actualizado, el uso de Tailwind debe seguir estas convenciones:
+
+### Colores (Configurados en `tailwind.config.js`)
+- **Textos:** Evitar negro absoluto. Usar `text-brand-navy-900` para títulos principales y `text-brand-soft-textSec` para subtítulos o texto secundario.
+- **Botones Principales:** Fondo `bg-brand-navy-900` con hover aclarado (ej. `hover:bg-[#1e2d4a]`) en lugar de colores chillones.
+- **Bordes y Cajas:** Usar `border-brand-soft-border` para inputs y separadores.
+- **Focus States:** Es mandatorio que todo input tenga focus states claros. Patrón estándar: `focus:border-brand-green-700 focus:ring-2 focus:ring-brand-green-700/20`.
+- **Errores:** Usar `brand-coral-500` en textos y bordes de validación.
+
+### Formas y Espacios (SaaS Moderno)
+- **Inputs:** Amplios y cómodos para tocar (`py-3`). Bordes redondeados (`rounded-xl`). Iconos SVG descriptivos integrados dentro del campo (padding izquierdo ajustado `pl-11`).
+- **Sombras:** Uso sutil (`shadow-sm`, `shadow-md`), evitando sombras muy pesadas y oscuras.
+- **Tipografías:** Mezclar `font-display` (Gliker) para títulos o branding, con la fuente base (Open Sans) para lectura y formularios.
+
+### Estructura Auth/Guest (Split Panel)
+Si se construyen nuevas pantallas para invitados (landing, onboarding), seguir el patrón `full-screen split`:
+- `min-h-screen flex flex-col lg:flex-row`
+- Columna branding: `lg:w-[45%]` con fondos suaves u orgánicos.
+- Columna formulario: `flex-1 bg-white` centrado verticalmente.

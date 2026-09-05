@@ -83,9 +83,9 @@ El frontend puede implementar notificaciones Toast cuando ocurra:
 Los retos (Challenges) son, en su mayoría, globales (`company_id = NULL`). Sin embargo, está preparado para el futuro donde un reto se origine a partir del diagnóstico financiero de una empresa específica.
 Si `UserChallenge.company_id` existe, el Frontend debe asegurarse de mostrarlo únicamente si la empresa activa coincide, o etiquetarlo como perteneciente a esa empresa.
 
-## UI Data & Mobile-First
-Se sugiere implementar tarjetas (Cards) simples:
-1. **Header Perfil**: Nivel, XP Total y Barra de progreso circular o lineal usando `progress_percentage`.
-2. **Card de Racha**: Icono de fuego 🔥 y `current_streak` días.
-3. **Logros**: Grid con los iconos de los logros recientes.
-4. **Retos Activos**: Lista con checkbox circular que se rellena según `progress / target`.
+## UI Data & Mobile-First (Estilos SaaS)
+Siguiendo las convenciones de diseño actualizadas (ver `FRONTEND_STRUCTURE.md`), la UI debe sentirse limpia y moderna:
+1. **Header Perfil**: Nivel destacado con tipografía `font-display` (Gliker). Barra de progreso circular o lineal usando `progress_percentage` con acentos en `brand-gold-500` o `brand-green-500`.
+2. **Card de Racha**: Icono de fuego 🔥 y `current_streak` días. Usar un fondo sutil tintado (ej. `bg-brand-soft-bg`).
+3. **Logros**: Grid con los iconos de los logros recientes. Sombras suaves `shadow-sm` y bordes redondeados `rounded-xl`.
+4. **Retos Activos**: Lista con checkbox circular que se rellena según `progress / target`. Textos principales en `text-brand-navy-900` y secundarios en `text-brand-soft-textSec`.

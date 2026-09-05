@@ -93,40 +93,39 @@ Para web conservar la jerarquía y ajustar responsivamente con `rem/clamp()`; lo
 
 Si se usan tonos claros adicionales, deben derivarse con transparencia/tints de estos tokens y mantenerse consistentes.
 
-## Layout
+## Layout & Composición SaaS
 
-### Escritorio
+La interfaz debe seguir estándares de aplicaciones SaaS B2B modernas.
 
-- sidebar colapsable con módulos activos;
-- topbar con empresa activa, notificaciones y perfil;
-- área central con máximo de lectura razonable;
-- cards para KPIs;
-- tablas para operaciones.
+### Pantallas de Autenticación (Guest Layout)
+- **Desktop:** Layout dividido en dos columnas (Split-panel). 
+  - Panel izquierdo (45% aprox): Identidad de marca, fondo suave (gradientes muy sutiles de verde/blanco), gráficos decorativos con baja opacidad, logotipo prominente.
+  - Panel derecho (55% aprox): Formulario limpio sobre fondo blanco, ancho controlado (`max-w-md`), centrado.
+  - Ambos paneles ocupan el 100% del alto de la pantalla (full-screen split), sin usar tarjetas flotantes (`card containers`) que limiten el espacio en desktop.
+- **Mobile/Tablet:** Una sola columna, logo reducido en la parte superior, formulario directamente visible sin scroll innecesario.
 
-### Móvil
-
-- navegación inferior o drawer;
-- priorizar acciones principales;
-- tablas se convierten en cards/listas cuando la lectura horizontal sea mala;
-- formularios en una columna.
+### Pantallas Internas (App Shell)
+- **Desktop:** 
+  - Sidebar izquierdo fijo para navegación de módulos.
+  - Topbar con selector de empresa, notificaciones y perfil.
+  - Área central de contenido con `max-w-7xl` para lectura óptima.
+  - Fondos suaves (`brand-soft-bg`) para separar el contenido blanco de las tarjetas.
+- **Mobile:**
+  - Navegación inferior o drawer lateral.
+  - Priorización extrema de acciones principales (botones FAB o sticky bottoms).
 
 ## Dos ambientes, una sola marca
 
-### Finanzas
+### Finanzas (Dashboard, Inventario, Facturación)
+- **Sobrio y Ejecutivo:** Blanco predominante en contenedores, fondo de pantalla gris muy claro (`#F7FAF7`).
+- **Jerarquía:** Verde (`brand-green-700`) y Navy (`brand-navy-900`) para acciones principales y textos.
+- **Limpieza visual:** Cifras legibles (Open Sans), mucho espacio en blanco, sin ruido gráfico innecesario.
+- **Campos y Tablas:** Inputs amplios (`py-3`, `rounded-xl`), bordes suaves (`border-gray-200` o `brand-soft-border`).
 
-- más sobrio;
-- fondo claro;
-- verde/navy;
-- cifras grandes y legibles;
-- mínimo ruido visual.
-
-### Aprende
-
-- más expresivo;
-- progreso, XP, insignias;
-- pink/coral/gold como acento;
-- mascota/ilustración donde ayude;
-- no convertir todas las pantallas en caricatura.
+### Aprende & Gamificación (Cursos, Retos)
+- **Expresivo y Cálido:** Uso de Gliker para títulos de niveles o felicitaciones.
+- **Acentos:** Pink, Coral y Gold para insignias, XP y barras de progreso.
+- **Gráficos:** Ilustraciones del Chanchito Nica y formas orgánicas, pero manteniendo el layout ordenado. No saturar la pantalla.
 
 ## Componentes base
 
