@@ -24,15 +24,15 @@ Leyenda: `[ ]` pendiente · `[-]` en proceso · `[x]` terminado · `[!]` bloquea
 
 ## Fase 2 — Finanzas
 - [x] Inventory/stock/movements/warehouses.
-- [ ] Customers/items invoices/lines.
-- [ ] Emisión contado/crédito.
-- [ ] Receivables.
-- [ ] Customer payments/applications.
-- [ ] Cash accounts/movements.
-- [ ] Suppliers/purchases.
-- [ ] Payables/supplier payments.
-- [ ] Dashboard inicial.
-- [ ] Tests de integración financieros.
+- [x] Customers/items invoices/lines (Backend).
+- [x] Emisión contado/crédito (Backend).
+- [x] Receivables (Backend).
+- [x] Customer payments/applications (Backend).
+- [x] Cash accounts/movements (Treasury Backend).
+- [x] Suppliers/purchases (Backend).
+- [x] Payables/supplier payments (Backend).
+- [x] Dashboard inicial (Global Financial Analytics).
+- [x] Tests de integración financieros.
 
 ## Fase 3 — Diagnóstico
 - [ ] indicator definitions.
@@ -44,13 +44,13 @@ Leyenda: `[ ]` pendiente · `[-]` en proceso · `[x]` terminado · `[!]` bloquea
 - [ ] UI de señales.
 
 ## Fase 4 — Educación
-- [ ] source documents.
-- [ ] source chunks/retrieval simple.
-- [ ] cursos/unidades/lecciones.
-- [ ] tareas.
-- [ ] quizzes.
-- [ ] progreso.
-- [ ] 3 rutas demo.
+- [x] source documents.
+- [x] source chunks/retrieval simple.
+- [x] cursos/unidades/lecciones.
+- [x] tareas.
+- [x] quizzes.
+- [x] progreso.
+- [x] 3 rutas demo.
 
 ## Fase 5 — Gamificación
 - [ ] perfil XP/nivel.

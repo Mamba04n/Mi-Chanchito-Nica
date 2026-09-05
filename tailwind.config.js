@@ -17,6 +17,20 @@ export default {
             },
             colors: {
                 brand: {
+                    soft: {
+                        bg: '#F7FAF7',
+                        sidebar: '#EEF5EF',
+                        border: '#E2ECE3',
+                        borderDark: '#D9E6DB',
+                        activeBg: '#DCEFE0',
+                        activeText: '#1F6B45',
+                        hoverBg: '#E8F4EA',
+                        textMain: '#163123',
+                        textSec: '#6B7A71',
+                        accent: '#2C8C5A',
+                        warnBg: '#FCECC8',
+                        warnText: '#A66B00',
+                    },
                     green: {
                         500: '#6FA65E',
                         700: '#1D6B46',

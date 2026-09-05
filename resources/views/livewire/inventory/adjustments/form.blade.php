@@ -5,10 +5,10 @@
 
     <div class="space-y-6 max-w-3xl mx-auto">
         
-        <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-gray-100">
-            <div class="p-6 border-b border-gray-100 bg-gray-50 bg-opacity-50">
+        <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-brand-soft-border">
+            <div class="p-6 border-b border-brand-soft-border bg-brand-soft-hoverBg bg-opacity-50">
                 <h3 class="text-lg font-bold text-brand-navy-900">Ajuste de Inventario</h3>
-                <p class="text-sm text-gray-500 mt-1">Registra la cantidad física contada para ajustar diferencias en el sistema.</p>
+                <p class="text-sm text-brand-soft-textSec mt-1">Registra la cantidad física contada para ajustar diferencias en el sistema.</p>
             </div>
             
             <form wire:submit.prevent="submit" class="p-6 space-y-6">
@@ -43,24 +43,24 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl border border-gray-100 p-6 grid grid-cols-3 gap-4 text-center relative overflow-hidden">
-                    <div class="z-10">
-                        <p class="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Stock Sistema</p>
-                        <p class="text-3xl font-display text-gray-900 mt-2">{{ number_format($currentStock, 2) }}</p>
+                <div class="bg-brand-soft-hoverBg rounded-xl border border-brand-soft-border p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 text-center relative overflow-hidden">
+                    <div class="flex-1">
+                        <p class="text-[10px] text-brand-soft-textSec font-bold uppercase tracking-wider">Stock Sistema</p>
+                        <p class="text-3xl font-display text-brand-soft-textMain mt-1">{{ number_format($currentStock, 2) }}</p>
                     </div>
                     
-                    <div class="z-10">
-                        <p class="text-[11px] text-brand-green-700 font-bold uppercase tracking-wider">Conteo Físico</p>
+                    <div class="flex-1 border-t border-b border-gray-200 py-4 md:border-y-0 md:border-x md:px-4">
+                        <p class="text-[10px] text-brand-green-700 font-bold uppercase tracking-wider">Conteo Físico (Real)</p>
                         <div class="mt-2 flex justify-center">
                             <input type="number" step="0.01" wire:model.live="real_quantity" required placeholder="0.00" 
-                                class="w-32 text-center rounded-lg border-brand-green-500 shadow-sm focus:ring-brand-green-500 focus:border-brand-green-500 text-xl font-bold text-brand-navy-900 py-1">
+                                class="w-32 text-center rounded-lg border-gray-300 shadow-sm focus:ring-brand-green-500 focus:border-brand-green-500 text-2xl font-bold text-brand-navy-900 py-2">
                         </div>
                         @error('real_quantity') <span class="text-xs text-brand-coral-500 mt-1 font-medium block">{{ $message }}</span> @enderror
                     </div>
                     
-                    <div class="z-10">
-                        <p class="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Diferencia</p>
-                        <p class="text-3xl font-display mt-2 {{ $difference > 0 ? 'text-brand-green-700' : ($difference < 0 ? 'text-brand-coral-500' : 'text-gray-900') }}">
+                    <div class="flex-1">
+                        <p class="text-[10px] text-brand-soft-textSec font-bold uppercase tracking-wider">Diferencia</p>
+                        <p class="text-3xl font-display mt-1 {{ $difference > 0 ? 'text-brand-green-700' : ($difference < 0 ? 'text-brand-coral-500' : 'text-brand-soft-textMain') }}">
                             {{ $difference > 0 ? '+' : '' }}{{ number_format($difference, 2) }}
                         </p>
                     </div>
@@ -87,13 +87,13 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end pt-6 border-t border-gray-100">
-                    <a href="{{ route('inventory.index') }}" wire:navigate class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors mr-3">
+                <div class="flex items-center justify-end pt-6 border-t border-brand-soft-border">
+                    <a href="{{ route('inventory.index') }}" wire:navigate class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-brand-soft-hoverBg hover:text-brand-soft-textMain transition-colors mr-3">
                         Cancelar
                     </a>
                     <button type="submit" 
                             wire:loading.attr="disabled"
-                            class="inline-flex justify-center px-5 py-2 text-sm font-bold text-white bg-brand-green-700 border border-transparent rounded-lg shadow-sm hover:bg-brand-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green-500 disabled:opacity-50 transition-colors">
+                            class="inline-flex justify-center px-5 py-2 text-sm font-bold text-white bg-brand-green-700 border border-transparent rounded-lg shadow-sm hover:bg-brand-soft-activeBg0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green-500 disabled:opacity-50 transition-colors">
                         <span wire:loading.remove wire:target="submit">Aplicar Ajuste</span>
                         <span wire:loading wire:target="submit" class="flex items-center gap-2">
                             <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>

@@ -65,6 +65,25 @@ class RolePermissionSeeder extends Seeder
             ['key' => 'billing.confirm', 'name' => 'Confirmar facturas', 'module_key' => 'billing'],
             ['key' => 'billing.cancel', 'name' => 'Anular facturas', 'module_key' => 'billing'],
             
+            ['key' => 'receivables.view', 'name' => 'Ver cuentas por cobrar', 'module_key' => 'receivables'],
+            ['key' => 'receivables.payment.create', 'name' => 'Registrar pagos CxC', 'module_key' => 'receivables'],
+
+            ['key' => 'purchases.view', 'name' => 'Ver compras', 'module_key' => 'purchases'],
+            ['key' => 'purchases.create', 'name' => 'Crear compras', 'module_key' => 'purchases'],
+            ['key' => 'purchases.update', 'name' => 'Editar compras', 'module_key' => 'purchases'],
+            ['key' => 'purchases.confirm', 'name' => 'Confirmar compras', 'module_key' => 'purchases'],
+            ['key' => 'purchases.cancel', 'name' => 'Anular compras', 'module_key' => 'purchases'],
+            
+            ['key' => 'payables.view', 'name' => 'Ver cuentas por pagar', 'module_key' => 'payables'],
+            ['key' => 'payables.payment.create', 'name' => 'Registrar pagos CxP', 'module_key' => 'payables'],
+
+            ['key' => 'treasury.view', 'name' => 'Ver tesorería', 'module_key' => 'treasury'],
+            ['key' => 'treasury.manage_accounts', 'name' => 'Administrar cuentas financieras', 'module_key' => 'treasury'],
+            ['key' => 'treasury.income.create', 'name' => 'Registrar ingresos', 'module_key' => 'treasury'],
+            ['key' => 'treasury.expense.create', 'name' => 'Registrar egresos', 'module_key' => 'treasury'],
+            ['key' => 'treasury.transfer', 'name' => 'Transferir fondos', 'module_key' => 'treasury'],
+            ['key' => 'treasury.adjust', 'name' => 'Ajustar saldos', 'module_key' => 'treasury'],
+
             ['key' => 'modules.manage', 'name' => 'Administrar módulos', 'module_key' => 'core'],
             ['key' => 'users.manage', 'name' => 'Administrar usuarios', 'module_key' => 'core'],
         ];
@@ -82,7 +101,11 @@ class RolePermissionSeeder extends Seeder
             'suppliers.view', 'suppliers.create', 'suppliers.update',
             'catalog.view', 'catalog.create', 'catalog.update',
             'inventory.view', 'inventory.create', 'inventory.update', 'inventory.adjust', 'inventory.transfer', 'inventory.warehouses.manage',
-            'billing.view', 'billing.create', 'billing.confirm'
+            'billing.view', 'billing.create', 'billing.confirm',
+            'receivables.view', 'receivables.payment.create',
+            'purchases.view', 'purchases.create', 'purchases.update', 'purchases.confirm',
+            'payables.view', 'payables.payment.create',
+            'treasury.view', 'treasury.manage_accounts', 'treasury.income.create', 'treasury.expense.create', 'treasury.transfer', 'treasury.adjust'
         ])->get();
         $manager->permissions()->sync($managerPermissions);
 
@@ -91,13 +114,18 @@ class RolePermissionSeeder extends Seeder
             'suppliers.view',
             'catalog.view',
             'inventory.view', 'inventory.create', 'inventory.update', 'inventory.transfer',
-            'billing.view', 'billing.create'
+            'billing.view', 'billing.create',
+            'receivables.view', 'receivables.payment.create',
+            'purchases.view', 'purchases.create',
+            'payables.view', 'payables.payment.create',
+            'treasury.view', 'treasury.income.create', 'treasury.expense.create'
         ])->get();
         $operator->permissions()->sync($operatorPermissions);
 
         $viewerPermissions = Permission::whereIn('key', [
             'customers.view', 'suppliers.view', 'catalog.view',
-            'inventory.view', 'billing.view'
+            'inventory.view', 'billing.view', 'receivables.view',
+            'purchases.view', 'payables.view', 'treasury.view'
         ])->get();
         $viewer->permissions()->sync($viewerPermissions);
     }

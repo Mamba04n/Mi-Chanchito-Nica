@@ -5,8 +5,8 @@
 
     <div class="space-y-6 max-w-4xl mx-auto">
         
-        <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-gray-100">
-            <div class="p-6 border-b border-gray-100 flex items-center space-x-3 bg-gray-50 bg-opacity-50">
+        <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-brand-soft-border">
+            <div class="p-6 border-b border-brand-soft-border flex items-center space-x-3 bg-brand-soft-hoverBg bg-opacity-50">
                 <div class="p-2 bg-brand-navy-900 text-white rounded-lg shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <h3 class="text-lg font-bold text-brand-navy-900">Transferir Existencias</h3>
-                    <p class="text-sm text-gray-500 mt-1">Mueve productos de un almacén a otro de forma segura.</p>
+                    <p class="text-sm text-brand-soft-textSec mt-1">Mueve productos de un almacén a otro de forma segura.</p>
                 </div>
             </div>
             
@@ -29,7 +29,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start relative">
                     
                     <!-- Origen -->
-                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 relative z-10">
+                    <div class="bg-brand-soft-hoverBg p-6 rounded-2xl border border-brand-soft-border relative z-10">
                         <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gray-200">
                             <span class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 text-xs flex items-center justify-center font-bold">1</span>
                             <h4 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Origen</h4>
@@ -58,22 +58,29 @@
                                 @error('product_id') <span class="text-xs text-brand-coral-500 mt-1 font-medium block">{{ $message }}</span> @enderror
                             </div>
                             
-                            <div class="pt-2 bg-white rounded-lg p-3 border border-gray-100 flex justify-between items-center">
-                                <span class="text-xs font-bold text-gray-500 uppercase">Disponible</span>
+                            <div class="pt-2 bg-white rounded-lg p-3 border border-brand-soft-border flex justify-between items-center">
+                                <span class="text-xs font-bold text-brand-soft-textSec uppercase">Disponible</span>
                                 <span class="text-lg font-bold {{ $available_quantity > 0 ? 'text-brand-green-700' : 'text-gray-400' }}">{{ number_format($available_quantity, 2) }}</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Flecha visual (Desktop) -->
-                    <div class="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-gray-100 rounded-full items-center justify-center shadow-sm z-20">
+                    <div class="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white border border-brand-soft-border rounded-full items-center justify-center shadow-sm z-20">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </div>
 
+                    <!-- Flecha visual (Mobile) -->
+                    <div class="flex lg:hidden justify-center -my-6 relative z-20">
+                        <div class="w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm">
+                            <svg class="w-5 h-5 text-brand-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                    </div>
+
                     <!-- Destino -->
-                    <div class="bg-brand-green-50 bg-opacity-30 p-6 rounded-2xl border border-brand-green-500 border-opacity-20 relative z-10">
+                    <div class="bg-brand-soft-activeBg bg-opacity-30 p-6 rounded-2xl border border-brand-green-500 border-opacity-20 relative z-10">
                         <div class="flex items-center gap-2 mb-4 pb-3 border-b border-brand-green-500 border-opacity-20">
-                            <span class="w-6 h-6 rounded-full bg-brand-green-500 text-white text-xs flex items-center justify-center font-bold">2</span>
+                            <span class="w-6 h-6 rounded-full bg-brand-soft-activeBg0 text-white text-xs flex items-center justify-center font-bold">2</span>
                             <h4 class="text-sm font-bold text-brand-green-700 uppercase tracking-wider">Destino</h4>
                         </div>
                         
@@ -105,8 +112,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end pt-6 border-t border-gray-100">
-                    <a href="{{ route('inventory.index') }}" wire:navigate class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 hover:text-gray-900 transition-colors mr-3">
+                <div class="flex items-center justify-end pt-6 border-t border-brand-soft-border">
+                    <a href="{{ route('inventory.index') }}" wire:navigate class="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-brand-soft-hoverBg hover:text-brand-soft-textMain transition-colors mr-3">
                         Cancelar
                     </a>
                     <button type="submit" 

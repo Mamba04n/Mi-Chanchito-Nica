@@ -11,37 +11,75 @@
             </div>
         @endif
 
-        <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-gray-100">
-            <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-gray-50 bg-opacity-50">
+        <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-brand-soft-border">
+            <div class="p-6 border-b border-brand-soft-border flex flex-col sm:flex-row justify-between items-center gap-4 bg-brand-soft-hoverBg bg-opacity-50">
                 <div>
                     <h3 class="text-lg font-bold text-brand-navy-900">Almacenes Registrados</h3>
-                    <p class="text-sm text-gray-500 mt-1">Gestiona las bodegas y sucursales de tu empresa.</p>
+                    <p class="text-sm text-brand-soft-textSec mt-1">Gestiona las bodegas y sucursales de tu empresa.</p>
                 </div>
                 
-                <button wire:click="create" class="inline-flex justify-center items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-brand-green-700 border border-transparent rounded-lg shadow-sm hover:bg-brand-green-500 transition-colors focus:outline-none">
+                <button wire:click="create" class="inline-flex justify-center items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-brand-green-700 border border-transparent rounded-lg shadow-sm hover:bg-brand-soft-activeBg0 transition-colors focus:outline-none">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                     Nuevo Almacén
                 </button>
             </div>
 
-            <div class="overflow-x-auto">
+            <!-- Mobile: List Cards -->
+            <div class="md:hidden divide-y divide-gray-100">
+                @forelse($warehouses as $wh)
+                    <div class="p-4 bg-white relative">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h4 class="text-sm font-bold text-brand-soft-textMain">{{ $wh->name }}</h4>
+                                <p class="text-xs text-brand-soft-textSec font-medium">{{ $wh->code }}</p>
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                @if($wh->is_default)
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-navy-900 text-white">Principal</span>
+                                @endif
+                                @if($wh->active)
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-green-50 text-brand-green-700 border border-green-100">Activo</span>
+                                @else
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-soft-hoverBg text-gray-600 border border-gray-200">Inactivo</span>
+                                @endif
+                            </div>
+                        </div>
+                        <p class="text-xs text-brand-soft-textSec mb-3 truncate">{{ $wh->address ?? 'Sin dirección' }}</p>
+                        
+                        <div class="flex items-center justify-end gap-3 pt-2 border-t border-gray-50">
+                            <button wire:click="edit({{ $wh->id }})" class="text-xs font-semibold text-brand-navy-900 hover:text-brand-green-700 transition-colors uppercase">Editar</button>
+                            @if($wh->active && !$wh->is_default)
+                                <button wire:click="deactivate({{ $wh->id }})" wire:confirm="¿Seguro que deseas desactivar este almacén?" class="text-xs font-semibold text-brand-coral-500 hover:text-red-700 transition-colors uppercase">Desactivar</button>
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                    <div class="p-8 text-center">
+                        <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <p class="text-sm font-medium text-brand-soft-textMain">No hay almacenes registrados</p>
+                    </div>
+                @endforelse
+            </div>
+
+            <!-- Desktop: Table -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-100">
                     <thead>
-                        <tr class="bg-gray-50 bg-opacity-50">
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Código</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nombre</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</th>
-                            <th scope="col" class="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Acciones</th>
+                        <tr class="bg-brand-soft-hoverBg">
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-brand-soft-textSec uppercase tracking-wider">Almacén</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-brand-soft-textSec uppercase tracking-wider">Detalles</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-brand-soft-textSec uppercase tracking-wider">Estado</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-semibold text-brand-soft-textSec uppercase tracking-wider">Acciones</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-100">
                         @forelse($warehouses as $wh)
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <tr class="hover:bg-brand-soft-hoverBg transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-brand-soft-textMain">
                                     {{ $wh->code }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                    <div class="text-sm font-bold text-brand-soft-textMain flex items-center gap-2">
                                         {{ $wh->name }}
                                         @if($wh->is_default)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold-500 bg-opacity-20 text-yellow-800">
@@ -49,15 +87,15 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="text-xs text-gray-500 mt-1">{{ $wh->address ?: 'Sin dirección registrada' }}</div>
+                                    <div class="text-xs text-brand-soft-textSec mt-1">{{ $wh->address ?: 'Sin dirección registrada' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($wh->active)
                                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-brand-green-700 border border-green-100">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-brand-green-500"></span> Activo
+                                            <span class="w-1.5 h-1.5 rounded-full bg-brand-soft-activeBg0"></span> Activo
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-50 text-gray-600 border border-gray-200">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-soft-hoverBg text-gray-600 border border-gray-200">
                                             <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Inactivo
                                         </span>
                                     @endif
@@ -74,7 +112,7 @@
                                 <td colspan="4" class="px-6 py-16 text-center">
                                     <div class="flex flex-col items-center">
                                         <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                                        <p class="text-base font-medium text-gray-900">No hay almacenes registrados</p>
+                                        <p class="text-base font-medium text-brand-soft-textMain">No hay almacenes registrados</p>
                                     </div>
                                 </td>
                             </tr>
@@ -95,10 +133,10 @@
                     <form wire:submit.prevent="save">
                         <div class="px-6 pt-6 pb-4">
                             <div class="flex items-center gap-3 mb-6">
-                                <div class="w-10 h-10 rounded-full bg-brand-green-50 flex items-center justify-center text-brand-green-700">
+                                <div class="w-10 h-10 rounded-full bg-brand-soft-activeBg flex items-center justify-center text-brand-green-700">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                                 </div>
-                                <h3 class="text-lg font-bold text-gray-900">
+                                <h3 class="text-lg font-bold text-brand-soft-textMain">
                                     {{ $editId ? 'Editar Almacén' : 'Nuevo Almacén' }}
                                 </h3>
                             </div>
@@ -126,24 +164,24 @@
                                     <textarea wire:model="description" rows="2" class="w-full rounded-lg border-gray-200 text-sm focus:ring-brand-green-500 focus:border-brand-green-500"></textarea>
                                 </div>
 
-                                <div class="bg-gray-50 rounded-lg p-4 mt-2 border border-gray-100 space-y-3">
+                                <div class="bg-brand-soft-hoverBg rounded-lg p-4 mt-2 border border-brand-soft-border space-y-3">
                                     <label class="flex items-center cursor-pointer">
                                         <input type="checkbox" wire:model="is_default" class="rounded border-gray-300 text-brand-green-700 focus:ring-brand-green-500">
-                                        <span class="ml-2 text-sm text-gray-900 font-medium">Establecer como almacén principal</span>
+                                        <span class="ml-2 text-sm text-brand-soft-textMain font-medium">Establecer como almacén principal</span>
                                     </label>
                                     
                                     <label class="flex items-center cursor-pointer">
                                         <input type="checkbox" wire:model="active" class="rounded border-gray-300 text-brand-green-700 focus:ring-brand-green-500">
-                                        <span class="ml-2 text-sm text-gray-900 font-medium">Almacén Activo</span>
+                                        <span class="ml-2 text-sm text-brand-soft-textMain font-medium">Almacén Activo</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 px-6 py-4 flex justify-end gap-3 rounded-b-2xl">
-                            <button type="button" wire:click="$set('showModal', false)" class="inline-flex justify-center rounded-lg border border-gray-200 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none transition-colors">
+                        <div class="bg-brand-soft-hoverBg px-6 py-4 flex justify-end gap-3 rounded-b-2xl">
+                            <button type="button" wire:click="$set('showModal', false)" class="inline-flex justify-center rounded-lg border border-gray-200 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-brand-soft-hoverBg focus:outline-none transition-colors">
                                 Cancelar
                             </button>
-                            <button type="submit" class="inline-flex justify-center rounded-lg border border-transparent px-5 py-2 bg-brand-green-700 text-sm font-bold text-white hover:bg-brand-green-500 focus:outline-none transition-colors">
+                            <button type="submit" class="inline-flex justify-center rounded-lg border border-transparent px-5 py-2 bg-brand-green-700 text-sm font-bold text-white hover:bg-brand-soft-activeBg0 focus:outline-none transition-colors">
                                 Guardar
                             </button>
                         </div>
