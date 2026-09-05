@@ -57,6 +57,8 @@ class GradeAssessment
             $attempt->status = AttemptStatus::Graded;
             $attempt->save();
 
+            app(\App\Services\Gamification\GamificationService::class)->handleAssessmentCompleted($attempt->user_id, $attempt);
+
             return $attempt;
         });
     }

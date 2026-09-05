@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             ModuleSeeder::class,
             EducationSeeder::class,
+            GamificationSeeder::class,
         ]);
 
         $user = User::factory()->create([

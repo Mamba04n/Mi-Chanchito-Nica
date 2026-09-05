@@ -18,15 +18,20 @@ class LearningProgressService
             ['status' => ProgressStatus::InProgress, 'progress_percentage' => 0]
         );
 
-        $progress->status = ProgressStatus::Completed;
-        $progress->progress_percentage = 100;
-        $progress->completed_at = now();
-        $progress->save();
+        if ($progress->status !== ProgressStatus::Completed) {
+            $progress->status = ProgressStatus::Completed;
+            $progress->progress_percentage = 100;
+            $progress->completed_at = now();
+            $progress->save();
 
-        // Update enrollment
-        $lesson = Lesson::with('unit')->find($lessonId);
-        if ($lesson && $lesson->unit) {
-            $this->updateProgramProgress($userId, $lesson->unit->learning_program_id);
+            $lesson = Lesson::with('unit')->find($lessonId);
+            if ($lesson) {
+                app(\App\Services\Gamification\GamificationService::class)->handleLessonCompleted($userId, $lesson);
+                
+                if ($lesson->unit) {
+                    $this->updateProgramProgress($userId, $lesson->unit->learning_program_id);
+                }
+            }
         }
     }
 
@@ -57,9 +62,13 @@ class LearningProgressService
         }
 
         if ($totalLessons > 0 && $totalLessons === $completedLessons) {
-            $enrollment->status = EnrollmentStatus::Completed;
-            $enrollment->completed_at = now();
-            $enrollment->save();
+            if ($enrollment->status !== EnrollmentStatus::Completed) {
+                $enrollment->status = EnrollmentStatus::Completed;
+                $enrollment->completed_at = now();
+                $enrollment->save();
+                
+                app(\App\Services\Gamification\GamificationService::class)->handleProgramCompleted($userId, $program);
+            }
         }
     }
 }

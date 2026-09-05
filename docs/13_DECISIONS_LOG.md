@@ -164,3 +164,18 @@ Se requiere una base académica sólida (Bloque 8) para 'Mi Chanchito Nica' dond
 **Consecuencias:**
 La carga cognitiva del motor IA futuro disminuye dramáticamente, delegando la responsabilidad de retención, navegación secuencial y control académico a la infraestructura estable del framework. El progreso educativo pertenece al usuario de manera global, independiente del tenant.
 
+
+### ADR-015: Arquitectura de Gamificación Independiente de IA
+
+**Contexto:**
+Se implementa el sistema de gamificación (Bloque 9) para fomentar la interacción del usuario. El diseño exige que el progreso del usuario persista de manera global y que las recompensas (XP, logros, rachas) se deriven de eventos educativos verificables sin intervención de un modelo generativo, preservando consistencia e idempotencia.
+
+**Decisión:**
+1. **Perfil Gamificado Global:** El progreso de gamificación (`GamificationProfile`, `XpTransaction`, etc.) está atado al `User`, no al Tenant, ya que los logros pertenecen a la persona.
+2. **XP Ledger y Transaccionalidad:** Los XP nunca se incrementan con un simple update al total. Se registran de forma atómica en `XpTransaction` validando si un evento educativo (ej: la misma lección) ya entregó XP previamente mediante `reference_type` y `reference_id`.
+3. **Flujo Unidireccional (Educación -> Gamificación):** La gamificación actúa como observador pasivo. `LearningProgressService` y `GradeAssessment` invocan atómicamente a `GamificationService` tras procesar exitosamente la lógica educativa. En ningún caso la gamificación sobreescribe estados educativos.
+4. **Retos (Challenges) con Contexto Opcional:** Se implementó multitenancy opcional (`company_id` nullable) dentro de `UserChallenge` para posibilitar, en fases posteriores de Inteligencia Artificial (Bloque 10), la asignación de retos específicos a problemas de una compañía.
+
+**Consecuencias:**
+La integridad de los logros académicos se mantiene. Previene que el usuario sobreescriba progreso mediante manipulaciones en frontend, y deja la arquitectura preparada para inyectar metas analíticas generadas por IA sin acoplar ambos bloques prematuramente.
+

@@ -53,11 +53,11 @@ Leyenda: `[ ]` pendiente · `[-]` en proceso · `[x]` terminado · `[!]` bloquea
 - [x] 3 rutas demo.
 
 ## Fase 5 — Gamificación
-- [ ] perfil XP/nivel.
-- [ ] racha.
-- [ ] logros.
-- [ ] challenges/user challenges.
-- [ ] reglas anti-duplicación de XP.
+- [x] perfil XP/nivel.
+- [x] racha.
+- [x] logros.
+- [x] challenges/user challenges.
+- [x] reglas anti-duplicación de XP.
 
 ## Fase 6 — IA
 - [ ] `AiProvider`.
